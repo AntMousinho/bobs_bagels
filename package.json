@@ -1,5 +1,25 @@
 {
   "dependencies": {
     "mousinho-testlibrary-mse-2103": "^1.0.2"
-  }
+  },
+  "name": "bobs_bagels",
+  "description": "```\r # Part 1\r As a member of the public\r So I can order a bagel when I want to\r I'd like to add an item to my basket",
+  "version": "1.0.0",
+  "main": "specRunner.js",
+  "devDependencies": {
+    "jasmine": "^3.7.0"
+  },
+  "scripts": {
+    "test": "jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntMousinho/bobs_bagels.git"
+  },
+  "author": "Antony Mousinho <antony.mousinho@hotmail.co.uk>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AntMousinho/bobs_bagels/issues"
+  },
+  "homepage": "https://github.com/AntMousinho/bobs_bagels#readme"
 }

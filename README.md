@@ -45,3 +45,28 @@ When I go to checkout I'd like to know the total sum of the bagels in my basket
 | Item | @int id |  | get id() | @int | ✅ |
 |  | @Number price |  | get Price() | @number | ✅ |
 | Checkout | @basket basket | total() | sums price of items in basket | @number | ✅ |
+
+## Extension 1
+| Object | Properties | Message | Context | Output | Done |
+| - | - | - | - | - | - |
+| Checkout |  | countItem(@String SKU) | called in each discount function | @Int number of each bagel type | ✅ |
+|  |  | onionDiscount | If you can apply the dicscount | @Float 0.45 * count/6   | ✅ |
+|  |  |  | if there is no discount to be applied | @Int 0  | ✅ |
+|  |  | plainDiscount | If there are enough for a discount | @float, 0.69 * count/12 | ✅ |
+|  |  |  | no discount to be applied | @Int 0 | ✅ |
+|  |  | everythingDiscount | enough for a discount | @float 0.45 * count / 6 | ✅ |
+|  |  |  | no discount to be applied | @Int 0 | ✅ |
+|  |  | coffeeDiscount | enough for discount | @Float 0.13 * smallest remaining amount between coffee and (plain bagel % 12) | ✅ |
+|  |  |  | no discount to be applied | @int 0 | ✅ |
+|  |  | totalDiscount() | sum all the discount functions | @Float | ✅ |
+|  |  | total() | edit to subtract totalDiscount() | @Float | ✅ |
+
+
+## Extension 2
+
+| Object | Properties | Message | Context | Output | Done |
+| - | - | - | - | - | - |
+| Priter | @Checkout | printReceipt() |  |  |  |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
+|  |  |  |  |  |  |
