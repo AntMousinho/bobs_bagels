@@ -29,15 +29,18 @@ class Printer {
 
     printReceipt() {
         const date = new Date(Date.now());
-        let output = `\t~~~ Bob's Bagels ~~~`
-        output += `\n\n\t${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, 0)}-${(date.getDate() + 1).toString().padStart(2, 0)} ${(date.getHours() + 1).toString().padStart(2, 0)}:${(date.getMinutes() + 1).toString().padStart(2, 0)}:${(date.getSeconds() + 1).toString().padStart(2, 0)}`;
-        output += `\n\n----------------------------\n`;
+        let output = `    ~~~ Bob's Bagels ~~~`
+        output += `\n\n    ${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, 0)}-${(date.getDate() + 1).toString().padStart(2, 0)} ${(date.getHours() + 1).toString().padStart(2, 0)}:${(date.getMinutes() + 1).toString().padStart(2, 0)}:${(date.getSeconds() + 1).toString().padStart(2, 0)}`;
+        output += `\n\n------------------------------\n`;
         for(let [key, value] of Object.entries(this.itemObject())) {
-            output += `\n${value.variant} ${value.name}\t${this.countItem(key)}\t${(this.countItem(key) * value.price).toFixed(2)}`;
+            let outputName;
+            if(value.variant === '') outputName = value.name;
+            else outputName = `${value.variant} ${value.name}`;
+            output += `\n${outputName}\t${this.countItem(key)}\t£${(this.countItem(key) * value.price).toFixed(2).padStart(5, ' ')}`;
         }
-        output += `\n\n----------------------------`;
-        output += `\nTotal        ${this._checkout.total()}`
-        output += `\n     thank you        \n   for your order!         `
+        output += `\n\n------------------------------`;
+        output += `\nTotal:\t\t\t£${this._checkout.total()}`
+        output += `\n\tthank you\n      for your order!`
         return output;
     }
 }
@@ -58,6 +61,5 @@ for(let i = 0; i < 3; i++){
 let testCheckout = new Checkout(userBasket);
 
 let testPrinter = new Printer(testCheckout);
-console.log(testPrinter.itemObject());
-// console.log(testPrinter.itemObject()['BGLO'].price)
+// console.log(testPrinter.itemObject());
 console.log(testPrinter.printReceipt());
