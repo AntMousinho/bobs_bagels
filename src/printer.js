@@ -1,18 +1,15 @@
 const Item = require('./item');
 const Basket = require('./basket');
-const Checkout = require('./calculator');
+const Calculator = require('./calculator');
+const deals = require('./dealFunctions');
 
 class Printer {
-    constructor(checkout) {
-        this._checkout = checkout;
+    constructor(calculator) {
+        this._calculator = calculator;
     }
 
     items() {
-        return this._checkout.items();
-    }
-
-    countItem(item) {
-        return this._checkout.countItem(item);
+        return this._calculator.items();
     }
 
     itemObject() {
@@ -34,7 +31,7 @@ class Printer {
         output += `\n\n------------------------------\n`;
         output += this.printItemSegment();
         output += `\n\n------------------------------`;
-        output += `\nTotal:\t\t\t£${this._checkout.total()}`
+        output += `\nTotal:\t\t\t£${this._calculator.total()}`
         output += `\n\tthank you\n      for your order!`
         return output;
     }
@@ -45,7 +42,7 @@ class Printer {
             let outputName;
             if(value.variant === '') outputName = value.name;
             else outputName = `${value.variant} ${value.name}`;
-            output += `\n${outputName}\t${this.countItem(key)}\t£${(this.countItem(key) * value.price).toFixed(2).padStart(5, ' ')}`;
+            output += `\n${outputName}\t${this._calculator.countItem(key)}\t£${(this._calculator.countItem(key) * value.price).toFixed(2).padStart(5, ' ')}`;
         }
         return output;
     }
@@ -64,8 +61,8 @@ for(let i = 0; i < 6; i++){
 for(let i = 0; i < 3; i++){
     userBasket.addItem(new Item('COF', 'Coffee', '', 0.99));
 }
-let testCheckout = new Checkout(userBasket);
+let testCalculator = new Calculator(userBasket, deals);
 
-let testPrinter = new Printer(testCheckout);
+let testPrinter = new Printer(testCalculator);
 // console.log(testPrinter.itemObject());
 console.log(testPrinter.printReceipt());

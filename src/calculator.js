@@ -1,35 +1,36 @@
+const { ConsoleReporter } = require("jasmine");
+
 class Calculator {
-    constructor(basket, deals) {
-        this._basket = basket;
-        this._deals = deals
-    }
-
-    items() {
-        return this._basket.items;
-    }
-
-    total() {
-        let result = this.items().map(item => item.price).reduce((a, b) => a + b);
-        result -= this.calculateTotalDiscount();
+    total(basket, deals) {
+        let result = basket.items.map(item => item.price).reduce((a, b) => a + b);
+        result -= this.calculateTotalDiscount(basket.items, deals);
         return parseFloat(result.toFixed(2));
     }
     
-    calculateTotalDiscount() {
-        return this.uniqueItemSKUs().map(SKU => {
-            return this.individualItemDiscount(SKU);
+    calculateTotalDiscount(itemArray, deals) {
+        return this.uniqueItemSKUs(itemArray).map(SKU => {
+            return this.individualItemDiscount(SKU, itemArray, deals);
         }).reduce((a, b) => a + b);
     }
 
-    individualItemDiscount(SKU) {
-        return this._deals[SKU].discount(this.items());
+    individualItemDiscount(SKU, itemArray, deals) {
+        return deals[SKU].discount(itemArray, this.countItem);
     }
 
-    uniqueItemSKUs() {
+    uniqueItemSKUs(itemArray) {
         let SKUArray = []
-        this._basket.items.forEach(item => {
+        itemArray.forEach(item => {
             if(!SKUArray.includes(item.id)) SKUArray.push(item.id);
         })
         return SKUArray
+    }
+
+    countItem(SKU, itemArray) {
+        let counter = 0
+        itemArray.forEach(item => {
+            if(item.id === SKU) counter ++;
+        })
+        return counter;
     }
 }
 
