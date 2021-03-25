@@ -6,23 +6,23 @@ let userBasket, item1, item2, item3;
 describe('Adding an item to the basket', () => {
     it('An item has been added to basket', () => {
         userBasket = new Basket();
-        item1 = new Item(1, 3.00);
+        item1 = new Item(1, 'a', 'n', 3.00);
         
         expect(userBasket.addItem(item1).length).toEqual(1);
     })
 
     it('The exact item was added to basket', () => {
         userBasket = new Basket();
-        item1 = new Item(1, 3.00);
+        item1 = new Item(1, 'a', 'n', 3.00);
         userBasket.addItem(item1);
         expect(userBasket.addItem(item2)[1]).toEqual(item2);
     })
 
     it('cannot add item when isFull is true', () => {
         userBasket = new Basket();
-        item1 = new Item(1, 3.00);
-        item2 = new Item(2, 2.00);
-        item3 = new Item(3, 4.00);
+        item1 = new Item(1, 'a', 'n', 3.00);
+        item2 = new Item(2, 'a', 'n', 2.00);
+        item3 = new Item(3, 'a', 'n', 4.00);
         userBasket.addItem(item1);
         userBasket.addItem(item2);
         expect(userBasket.addItem(item3)).toEqual(`Cannot add item, basket is full`);
@@ -30,7 +30,7 @@ describe('Adding an item to the basket', () => {
 
     it(`cannot add an item is it is already in the basket`, () => {
         userBasket = new Basket();
-        item1 = new Item(1, 3.00);
+        item1 = new Item(1, 'a', 'n', 3.00);
         userBasket.addItem(item1);
         expect(userBasket.addItem(item1)).toEqual(`Cannot add item that is already in the basket`);
     })
@@ -39,8 +39,8 @@ describe('Adding an item to the basket', () => {
 describe(`Removing an item from the basket`, () => {
     it('successfully removes an item from array', () => {
         userBasket = new Basket();
-        item1 = new Item(1, 3.00);
-        item2 = new Item(2, 2.00);
+        item1 = new Item(1, 'a', 'n', 3.00);
+        item2 = new Item(2, 'a', 'n', 2.00);
         userBasket.addItem(item1);
         userBasket.addItem(item2);
         
@@ -49,8 +49,8 @@ describe(`Removing an item from the basket`, () => {
 
     it('check to see if it removes the exact item from the array', () => {
         userBasket = new Basket();
-        item1 = new Item(1, 3.00);
-        item2 = new Item(2, 2.00);
+        item1 = new Item(1, 'a', 'n', 3.00);
+        item2 = new Item(2, 'a', 'n', 2.00);
         userBasket.addItem(item1);
         userBasket.addItem(item2);
 
@@ -71,15 +71,15 @@ describe('Basket capacity and isFull tests', () => {
 
     it('isFull returns false then items.length < capacity', () => {
         userBasket = new Basket();
-        item1 = new Item(1, 3.00);
+        item1 = new Item(1, 'a', 'n', 3.00);
         userBasket.addItem(item1);
         expect(userBasket.isFull()).toEqual(false);
     })
 
     it('isFull returns true when items.length = capacity', () => {
         userBasket = new Basket();
-        item1 = new Item(1, 3.00);
-        item2 = new Item(2, 2.00);
+        item1 = new Item(1, 'a', 'n', 3.00);
+        item2 = new Item(2, 'a', 'n', 2.00);
         userBasket.addItem(item1);
         userBasket.addItem(item2);
         expect(userBasket.isFull()).toEqual(true);

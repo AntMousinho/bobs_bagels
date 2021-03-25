@@ -1,18 +1,21 @@
 class Checkout {
-    constructor(basket, menu) {
+    constructor(basket) {
         this._basket = basket;
-        this._menu = menu;
+    }
+
+    items() {
+        return this._basket.items;
     }
 
     total() {
-        let result = this._basket.items.map(item => item.price).reduce((a, b) => a + b);
+        let result = this.items().map(item => item.price).reduce((a, b) => a + b);
         result -= this.totalDiscount();
-        return Math.round(result * 100) / 100;
+        return parseFloat(result.toFixed(2));
     }
 
     countItem(SKU) {
         let count = 0;
-        this._basket.items.forEach(item => {
+        this.items().forEach(item => {
             if(item.id === SKU) count ++;
         });
         return count;
