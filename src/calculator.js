@@ -1,5 +1,3 @@
-const { ConsoleReporter } = require("jasmine");
-
 class Calculator {
     total(basket, deals) {
         let result = basket.items.map(item => item.price).reduce((a, b) => a + b);
@@ -18,18 +16,18 @@ class Calculator {
     }
 
     uniqueItemSKUs(itemArray) {
-        let SKUArray = []
+        let SKUArray = [];
         itemArray.forEach(item => {
             if(!SKUArray.includes(item.id)) SKUArray.push(item.id);
-        })
-        return SKUArray
+        });
+        return SKUArray;
     }
 
     countItem(SKU, itemArray) {
-        let counter = 0
+        let counter = 0;
         itemArray.forEach(item => {
             if(item.id === SKU) counter ++;
-        })
+        });
         return counter;
     }
 }

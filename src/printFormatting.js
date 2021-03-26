@@ -1,20 +1,20 @@
 let tableConfig = {
     border: {
-        topBody: '-',
-        topJoin: '',
-        topLeft: '',
-        topRight: '',
-        bottomBody: '',
-        bottomJoin: '',
-        bottomLeft: '',
-        bottomRight: '',
-        bodyLeft: '',
-        bodyRight: '',
-        bodyJoin: '',
-        joinBody: '',
-        joinLeft: '',
-        joinRight: '',
-        joinJoin: ''
+        topBody: "-",
+        topJoin: "",
+        topLeft: "",
+        topRight: "",
+        bottomBody: "",
+        bottomJoin: "",
+        bottomLeft: "",
+        bottomRight: "",
+        bodyLeft: "",
+        bodyRight: "",
+        bodyJoin: "",
+        joinBody: "",
+        joinLeft: "",
+        joinRight: "",
+        joinJoin: ""
       },
     columnDefault: {
         paddingLeft: 0,
@@ -29,7 +29,7 @@ let tableConfig = {
         },
         1: {
             width: 3,
-            alignment: 'right',
+            alignment: "right",
             paddingRight: 1
         },
         2: {
@@ -38,16 +38,16 @@ let tableConfig = {
         },
         3: {
             width: 6,
-            alignment: 'right'
+            alignment: "right"
         }
     }
-}
+};
 
 const centerAlign = (len, longest) => {
     return {
         indent: Math.floor((longest - len) / 2),
-    }
-}
+    };
+};
 
 
 module.exports = { tableConfig, centerAlign };

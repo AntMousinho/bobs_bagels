@@ -9,6 +9,7 @@
   "version": "1.0.0",
   "main": "specRunner.js",
   "devDependencies": {
+    "eslint": "^7.22.0",
     "jasmine": "^3.7.0"
   },
   "scripts": {

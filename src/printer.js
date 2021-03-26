@@ -1,6 +1,6 @@
-const { table } = require('table');
-const { tableConfig, centerAlign } = require('./printFormatting');
-const align = require('align-text');
+const { table } = require("table");
+const { tableConfig, centerAlign } = require("./printFormatting");
+const align = require("align-text");
 
 class Printer {
     constructor(calculator){
@@ -9,18 +9,18 @@ class Printer {
     
     printReceipt(basket, deals) {
         const itemTableInput = this.itemArrayForTable(basket.items, deals);
-        const totalTableInput = [['Total', '', '£', this.calculator.total(basket, deals).toFixed(2)]];
+        const totalTableInput = [["Total", "", "£", this.calculator.total(basket, deals)]];
         
-        let output = `\n~~~ Bob's Bagels ~~~`;
-        output += '\n\n' + this.getDate();
-        output += '\n\n' + table(itemTableInput, tableConfig);
+        let output = "\n~~~ Bob's Bagels ~~~";
+        output += "\n\n" + this.getDate();
+        output += "\n\n" + table(itemTableInput, tableConfig);
         output += table(totalTableInput, tableConfig);
-        output += `Thank you\nfor your order!`;
+        output += "Thank you\nfor your order!";
         return align(output, centerAlign);
     }
     
     itemArrayForTable(itemArray, deals) {
-        let output = []
+        let output = [];
         for(let [key, value] of Object.entries(this.generateItemObject(itemArray))) {
             let itemCount = this.calculator.countItem(key, itemArray);
             let itemDiscount = this.calculator.individualItemDiscount(key, itemArray, deals);
@@ -30,7 +30,7 @@ class Printer {
             if(value.variant) outputName = `${value.variant} ${value.name}`;
             else outputName = value.name;
             
-            output.push([outputName, itemCount, '£', totalItemPrice.toFixed(2)]);
+            output.push([outputName, itemCount, "£", totalItemPrice.toFixed(2)]);
         }
         return output;
     }
@@ -42,8 +42,8 @@ class Printer {
                 name: item.name,
                 variant: item.variant,
                 price: item.price
-            }
-        })
+            };
+        });
         return itemObject;
     }
 

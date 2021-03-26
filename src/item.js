@@ -1,5 +1,5 @@
 class Item {
-    constructor(id = 'BGLO', name = 'Bagel', variant = 'Onion', price = 0.49) {
+    constructor(id = "BGLO", name = "Bagel", variant = "Onion", price = 0.49) {
         this._id = id;
         this._name = name;
         this._variant = variant;
