@@ -7,11 +7,11 @@ class Calculator {
     
     calculateTotalDiscount(itemArray, deals) {
         return this.uniqueItemSKUs(itemArray).map(SKU => {
-            return this.individualItemDiscount(SKU, itemArray, deals);
+            return this.individualSKUDiscount(SKU, itemArray, deals);
         }).reduce((a, b) => a + b);
     }
 
-    individualItemDiscount(SKU, itemArray, deals) {
+    individualSKUDiscount(SKU, itemArray, deals) {
         return deals[SKU].discount(itemArray, this.countItem);
     }
 

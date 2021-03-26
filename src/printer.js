@@ -23,7 +23,7 @@ class Printer {
         let output = [];
         for(let [key, value] of Object.entries(this.generateItemObject(itemArray))) {
             let itemCount = this.calculator.countItem(key, itemArray);
-            let itemDiscount = this.calculator.individualItemDiscount(key, itemArray, deals);
+            let itemDiscount = this.calculator.individualSKUDiscount(key, itemArray, deals);
             let totalItemPrice = itemCount * value.price - itemDiscount;
             
             let outputName;

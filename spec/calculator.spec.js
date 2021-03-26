@@ -39,28 +39,28 @@ describe('Testing calculator basic function: ', () => {
         expect(calculator.countItem('BGLE', userBasket.items)).toEqual(6);
     })
 
-    it('individualItemDiscount function returns the discount for that item', () => {
+    it('individualSKUDiscount function returns the discount for that item', () => {
         for(let i = 0; i < 6; i++){
             userBasket.addItem(new Item('BGLE', 'Bagel', 'Everything', 0.49));
         }
 
-        expect(calculator.individualItemDiscount('BGLE', userBasket.items, deals)).toEqual(0.45);
+        expect(calculator.individualSKUDiscount('BGLE', userBasket.items, deals)).toEqual(0.45);
     })
 
-    it('individualItemDiscount function returns correct discount when there are 2 discounts activated for the same item', () => {
+    it('individualSKUDiscount function returns correct discount when there are 2 discounts activated for the same item', () => {
         for(let i = 0; i < 12; i++){
             userBasket.addItem(new Item('BGLO', 'Bagel', 'Onion', 0.49));
         }
 
-        expect(calculator.individualItemDiscount('BGLO', userBasket.items, deals)).toEqual(0.90);
+        expect(calculator.individualSKUDiscount('BGLO', userBasket.items, deals)).toEqual(0.90);
     })
 
-    it('individualItemDiscount function returns 0 when there is no discount to be appleid', () => {
+    it('individualSKUDiscount function returns 0 when there is no discount to be appleid', () => {
         for(let i = 0; i < 5; i++){
             userBasket.addItem(new Item('BGLO', 'Bagel', 'Onion', 0.49));
         }
 
-        expect(calculator.individualItemDiscount('BGLO', userBasket.items, deals)).toEqual(0);
+        expect(calculator.individualSKUDiscount('BGLO', userBasket.items, deals)).toEqual(0);
     })
 })
 
