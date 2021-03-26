@@ -6,9 +6,12 @@ const deals = require('../src/dealFunctions')
 let userBasket, calculator;
 
 describe('Testing calculator basic function: ', () => {
+    beforeAll(() => {
+        calculator = new Calculator();
+    })
+
     beforeEach(() => {
         userBasket = new Basket(30);
-        calculator = new Calculator();
     })
 
     it('countItems()', () => {
@@ -35,9 +38,33 @@ describe('Testing calculator basic function: ', () => {
 
         expect(calculator.countItem('BGLE', userBasket.items)).toEqual(6);
     })
+
+    it('individualItemDiscount function returns the discount for that item', () => {
+        for(let i = 0; i < 6; i++){
+            userBasket.addItem(new Item('BGLE', 'Bagel', 'Everything', 0.49));
+        }
+
+        expect(calculator.individualItemDiscount('BGLE', userBasket.items, deals)).toEqual(0.45);
+    })
+
+    it('individualItemDiscount function returns correct discount when there are 2 discounts activated for the same item', () => {
+        for(let i = 0; i < 12; i++){
+            userBasket.addItem(new Item('BGLO', 'Bagel', 'Onion', 0.49));
+        }
+
+        expect(calculator.individualItemDiscount('BGLO', userBasket.items, deals)).toEqual(0.90);
+    })
+
+    it('individualItemDiscount function returns 0 when there is no discount to be appleid', () => {
+        for(let i = 0; i < 5; i++){
+            userBasket.addItem(new Item('BGLO', 'Bagel', 'Onion', 0.49));
+        }
+
+        expect(calculator.individualItemDiscount('BGLO', userBasket.items, deals)).toEqual(0);
+    })
 })
 
-describe('Testing Calculator class total', () => {
+describe('Testing Calculator total function', () => {
     it('basket.total sums the price of items', () => {
         userBasket = new Basket(10);
         for(let i = 0; i < 5; i++) {
@@ -50,9 +77,12 @@ describe('Testing Calculator class total', () => {
 
 
 describe('Checking deals and changing them for summary: ', () => {
+    beforeAll(() => {
+        calculator = new Calculator();
+    })
+
     beforeEach(() => {
         userBasket = new Basket(30);
-        calculator = new Calculator();
     })
 
     it('Adding 6 onion bagels and recognising a deal', () => {
@@ -117,9 +147,12 @@ describe('Checking deals and changing them for summary: ', () => {
 
 
 describe('Testing cronut functionality: ', () => {
+    beforeAll(() => {
+        calculator = new Calculator();
+    })
+
     beforeEach(() => {
         userBasket = new Basket(30)
-        calculator = new Calculator()
     })
 
     it('returning total price of basket only filled with cronuts', () => {

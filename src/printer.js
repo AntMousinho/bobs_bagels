@@ -1,20 +1,43 @@
-const Item = require('./item');
-const Basket = require('./basket');
-const Calculator = require('./calculator');
-const deals = require('./dealFunctions');
+const { table } = require('table');
+const { tableConfig, centerAlign } = require('./printFormatting');
+const align = require('align-text');
 
 class Printer {
-    constructor(calculator) {
-        this._calculator = calculator;
+    constructor(calculator){
+        this.calculator = calculator;
     }
-
-    items() {
-        return this._calculator.items();
+    
+    printReceipt(basket, deals) {
+        const itemTableInput = this.itemArrayForTable(basket.items, deals);
+        const totalTableInput = [['Total', '', '£', this.calculator.total(basket, deals).toFixed(2)]];
+        
+        let output = `\n~~~ Bob's Bagels ~~~`;
+        output += '\n\n' + this.getDate();
+        output += '\n\n' + table(itemTableInput, tableConfig);
+        output += table(totalTableInput, tableConfig);
+        output += `Thank you\nfor your order!`;
+        return align(output, centerAlign);
     }
-
-    itemObject() {
+    
+    itemArrayForTable(itemArray, deals) {
+        let output = []
+        for(let [key, value] of Object.entries(this.generateItemObject(itemArray))) {
+            let itemCount = this.calculator.countItem(key, itemArray);
+            let itemDiscount = this.calculator.individualItemDiscount(key, itemArray, deals);
+            let totalItemPrice = itemCount * value.price - itemDiscount;
+            
+            let outputName;
+            if(value.variant) outputName = `${value.variant} ${value.name}`;
+            else outputName = value.name;
+            
+            output.push([outputName, itemCount, '£', totalItemPrice.toFixed(2)]);
+        }
+        return output;
+    }
+    
+    generateItemObject(itemArray) {
         let itemObject = {};
-        this.items().forEach(item => {
+        itemArray.forEach(item => {
             itemObject[item.id] = {
                 name: item.name,
                 variant: item.variant,
@@ -24,45 +47,16 @@ class Printer {
         return itemObject;
     }
 
-    printReceipt() {
+    getDate() {
         const date = new Date(Date.now());
-        let output = `    ~~~ Bob's Bagels ~~~`
-        output += `\n\n    ${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, 0)}-${(date.getDate() + 1).toString().padStart(2, 0)} ${(date.getHours() + 1).toString().padStart(2, 0)}:${(date.getMinutes() + 1).toString().padStart(2, 0)}:${(date.getSeconds() + 1).toString().padStart(2, 0)}`;
-        output += `\n\n------------------------------\n`;
-        output += this.printItemSegment();
-        output += `\n\n------------------------------`;
-        output += `\nTotal:\t\t\t£${this._calculator.total()}`
-        output += `\n\tthank you\n      for your order!`
-        return output;
-    }
-
-    printItemSegment() {
-        let output = ''
-        for(let [key, value] of Object.entries(this.itemObject())) {
-            let outputName;
-            if(value.variant === '') outputName = value.name;
-            else outputName = `${value.variant} ${value.name}`;
-            output += `\n${outputName}\t${this._calculator.countItem(key)}\t£${(this._calculator.countItem(key) * value.price).toFixed(2).padStart(5, ' ')}`;
-        }
-        return output;
+        const year = date.getUTCFullYear();
+        const month = (date.getUTCMonth() + 1).toString().padStart(2, 0);
+        const day = date.getUTCDate().toString().padStart(2, 0);
+        const hour = date.getUTCHours().toString().padStart(2, 0);
+        const min = date.getUTCMinutes().toString().padStart(2, 0);
+        const seconds = date.getUTCSeconds().toString().padStart(2, 0);
+        return `${year}-${month}-${day} ${hour}:${min}:${seconds}`;
     }
 }
 
-let userBasket = new Basket(25);
-for(let i = 0; i < 2; i++){
-    userBasket.addItem(new Item('BGLO', 'Bagel', 'Onion', 0.49));
-}
-for(let i = 0; i < 12; i++){
-    userBasket.addItem(new Item('BGLP', 'Bagel', 'Plain', 0.39));
-}
-for(let i = 0; i < 6; i++){
-    userBasket.addItem(new Item('BGLE', 'Bagel', 'Everything', 0.49));
-}
-for(let i = 0; i < 3; i++){
-    userBasket.addItem(new Item('COF', 'Coffee', '', 0.99));
-}
-let testCalculator = new Calculator(userBasket, deals);
-
-let testPrinter = new Printer(testCalculator);
-// console.log(testPrinter.itemObject());
-console.log(testPrinter.printReceipt());
+module.exports = Printer;

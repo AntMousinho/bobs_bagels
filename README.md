@@ -1,3 +1,40 @@
+# Bobs Bagels - Antony Mousinho
+My personal version of the bobs bagels challenge for Digital Futures cohort mse-2103-a
+
+## Quick Start
+```
+$ git clone git@github.com:AntMousinho/bobs_bagels.git
+$ npm install
+```
+
+## To run Tests
+```
+$ npx jasmine
+# or
+$ npm test
+```
+
+## Current Progress
+- Completed extension 1 and 2, passing tests, and able to print a formatted receipt
+
+## Challenges
+- Refactoring
+    - Choosing how to refactor my classes, mainly the Calculator and Printer classes
+    - Extracting the deal functionality into an object with key value pairs of SKUs and discount functions
+        - Each SKU has its own discount() function
+    - How to organise my classes?
+        - Do I want to pass in classes into individual functions (e.g. Printer Class .printReceipt(@Basket, deals))
+        - Or should I be adding a class to the constructor?
+            - My thoughts are that one instance of a printer can print a receipt for multiple baskets
+            - rather than having to create a new printer for each individual basket
+    - I've tried to focus on high cohesion and low coupling, still unsure how much information a class has about another is too much information
+        - Sometimes to make it work, you just need to know about certain functions that another class contains
+- Found with the more complex classes (printer and calculator) it is harder to fully plan out the implementation before writing the code
+    - Ended up needing to write more functions than initially planned
+    - Further refactoring and splitting larger functions into multiple smaller ones
+
+
+## Challenge User Stories
 ```
 # Part 1
 As a member of the public
@@ -66,7 +103,6 @@ When I go to checkout I'd like to know the total sum of the bagels in my basket
 
 | Object | Properties | Message | Context | Output | Done |
 | - | - | - | - | - | - |
-| Priter | @Checkout | printReceipt() |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
-|  |  |  |  |  |  |
+| Priter | @Calculator | printReceipt(basket, deals) | To print a formatted receipt of the items in the basket, including deals | @String | ✅ |
+|  |  | getDate() | return a formatted string for the current date and time, to be called by the printReceipt() function | @String | ✅ |
+|  |  | individualItemSection(SKU) | to formatted item information for the given SKU, to be called by the printReceipt() output string | @String | ✅ |
